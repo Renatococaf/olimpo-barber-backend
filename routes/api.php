@@ -6,6 +6,7 @@ use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\FuncionarioController;
 use App\Http\Controllers\ServicoController;
 use App\Http\Controllers\AgendamentoController;
+use App\Http\Controllers\Admin\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,3 +28,12 @@ Route::apiResource('/clientes', ClienteController::class);
 Route::apiResource('/funcionarios', FuncionarioController::class);
 Route::apiResource('/servicos', ServicoController::class);
 Route::apiResource('/agendamentos', AgendamentoController::class);
+
+// Grupo de rotas para o Admin para manter organizado
+Route::prefix('admin')->group(function () {
+    Route::post('/login', [AuthController::class, 'login']);
+
+    // A rota de logout só será acessível se o admin estiver logado com um token válido
+    // O middleware 'auth:admins' usa o guard que criamos
+    Route::middleware('auth:admins')->post('/logout', [AuthController::class, 'logout']);
+});

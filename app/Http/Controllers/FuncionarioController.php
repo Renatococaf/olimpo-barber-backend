@@ -19,7 +19,7 @@ class FuncionarioController extends Controller
             'nome_completo' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:funcionarios',
             'password' => 'required|string|min:8',
-            'tipo_funcionario' => ['required', Rule::in(['BARBEIRO', 'SKINCARE', 'ADMIN'])],
+            'tipo_funcionario' => ['required', Rule::in(['BARBEIRO', 'SKINCARE'])],
             'ativo' => 'sometimes|boolean',
         ]);
 
@@ -38,7 +38,7 @@ class FuncionarioController extends Controller
         $validatedData = $request->validate([
             'nome_completo' => 'sometimes|required|string|max:255',
             'email' => ['sometimes', 'required', 'string', 'email', 'max:255', Rule::unique('funcionarios')->ignore($funcionario->id)],
-            'tipo_funcionario' => ['sometimes', 'required', Rule::in(['BARBEIRO', 'SKINCARE', 'ADMIN'])],
+            'tipo_funcionario' => ['sometimes', 'required', Rule::in(['BARBEIRO', 'SKINCARE'])],
             'ativo' => 'sometimes|boolean',
         ]);
 

@@ -13,7 +13,7 @@ return new class extends Migration
         $table->string('nome_completo');
         $table->string('email')->unique();
         $table->string('password');
-        $table->enum('tipo_funcionario', ['BARBEIRO', 'SKINCARE', 'ADMIN']);
+        $table->enum('tipo_funcionario', ['BARBEIRO', 'SKINCARE']);
         $table->boolean('ativo')->default(true);
         $table->timestamps();
     });
