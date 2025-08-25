@@ -3,17 +3,19 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Notifications\Notifiable; // Para futuras notificações
-use Illuminate\Foundation\Auth\User as Authenticatable; // Para permitir login
+use Illuminate\Foundation\Auth\User as Authenticatable; // <-- ADICIONADO
+use Illuminate\Notifications\Notifiable;             // <-- ADICIONADO
+use Laravel\Sanctum\HasApiTokens;                      // <-- ADICIONADO (O MAIS IMPORTANTE)
 
+// MUDE DE 'extends Model' PARA 'extends Authenticatable'
 class Funcionario extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    // ADICIONE 'HasApiTokens' e 'Notifiable' AQUI
+    use HasApiTokens, HasFactory, Notifiable;
 
     /**
-     * A lista de campos que podem ser preenchidos em massa.
+     * A "lista de permissão" de campos que podem ser preenchidos em massa.
      */
     protected $fillable = [
         'nome_completo',
@@ -34,7 +36,7 @@ class Funcionario extends Authenticatable
      * Conversões de tipo automáticas.
      */
     protected $casts = [
-        'password' => 'hashed', // Garante que a senha seja sempre criptografada
+        'password' => 'hashed',
         'ativo' => 'boolean',
     ];
 
@@ -44,5 +46,10 @@ class Funcionario extends Authenticatable
     public function agendamentos(): HasMany
     {
         return $this->hasMany(Agendamento::class);
+    }
+
+    public function disponibilidades(): HasMany
+    {
+        return $this->hasMany(Disponibilidade::class);
     }
 }

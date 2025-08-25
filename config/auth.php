@@ -36,6 +36,10 @@ return [
             'driver' => 'sanctum',
             'provider' => 'admins',
         ],
+        'funcionarios' => [
+        'driver' => 'sanctum',
+        'provider' => 'funcionarios',
+    ],
     ],
 
     /*
@@ -43,20 +47,22 @@ return [
     | User Providers
     |--------------------------------------------------------------------------
     */
-
-    'providers' => [
-        'users' => [
-            'driver' => 'eloquent',
-            // Aponta o provider 'users' para o seu Model de Cliente
-            'model' => App\Models\Cliente::class, // <-- MUDANÇA AQUI
-        ],
-
-        // Adicionado um provider específico para os Administradores
-        'admins' => [ // <-- ADICIONADO
-            'driver' => 'eloquent',
-            'model' => App\Models\Admin::class,
-        ],
+'providers' => [
+    'users' => [ // Provider para Clientes
+        'driver' => 'eloquent',
+        'model' => App\Models\Cliente::class,
     ],
+
+    'admins' => [ // Provider para Admins
+        'driver' => 'eloquent',
+        'model' => App\Models\Admin::class,
+    ],
+
+    'funcionarios' => [ // Provider para Funcionários
+        'driver' => 'eloquent',
+        'model' => App\Models\Funcionario::class,
+    ],
+],
 
     /*
     |--------------------------------------------------------------------------
